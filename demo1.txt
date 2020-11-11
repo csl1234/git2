@@ -1,0 +1,41 @@
+package sale_System;
+import java.sql.*; 
+public class Test { 
+public static void main(String[] srg) { 
+	connection();
+	}
+public static void connection() {
+    try {
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        Connection conn = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;DatabaseName = SM","sa","123");    
+        System.out.println("连接成功" );
+        Statement statement=conn.createStatement();//创建一个Statement对象
+//        System.out.println("开始创建表");
+//        String query="CREATE TABLE Person(姓名 CHAR(10),性别 NCHAR(2),年龄 INT)";//生成一条SQL建表语句
+//        statement.executeUpdate(query);//执行SQL建表语句
+//        System.out.println("开始插入数据");
+//        String a1="INSERT INTO Person VALUES('张三','男',18)";//生成一条SQL插入数据语句
+//        String a2="INSERT INTO Person VALUES('李四','男',19)";//生成一条SQL插入数据语句
+//        String a3="INSERT INTO Person VALUES('王五','男',20)";//生成一条SQL插入数据语句
+//        statement.executeUpdate(a1);//执行SQL插入语句
+//        statement.executeUpdate(a2);//执行SQL插入语句
+//        statement.executeUpdate(a3);//执行SQL插入语句
+//        System.out.println("插入数据成功");
+        System.out.println("开始读取数据");
+        ResultSet resultset=statement.executeQuery("SELECT *FROM Person");
+        System.out.println("姓名\t性别\t年龄");
+        while(resultset.next())//遍历结果集，输出每一条记录
+        {
+        System.out.println(resultset.getString("姓名")+"\t"+resultset.getString("性别")+"\t"+resultset.getInt("年龄"));
+        }
+        System.out.println("读取完毕");
+        statement.close();//关闭命令对象连接
+        conn.close();//关闭数据库连接
+        
+//        Statement st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+    } catch (Exception ex) {
+        // TODO: handle exception
+        ex.printStackTrace();
+        System.out.println("连接错误：" + ex.getMessage());
+    }
+}}
